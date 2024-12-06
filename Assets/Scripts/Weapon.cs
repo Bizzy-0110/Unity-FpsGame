@@ -5,8 +5,11 @@ public class Weapon : MonoBehaviour
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs;
 
     [SerializeField] int WeaponDamage = 1; // danno dell'arma per colpo
+
     [SerializeField] ParticleSystem shotEffect; // effetto di sparo
     [SerializeField] Animator animator; // controller per l'animazione
+
+    [SerializeField] GameObject hitVFXPrefab;
 
     const string SHOOT_STRING = "Shoot"; // nome dell' animazione di sparo
 
@@ -36,6 +39,8 @@ public class Weapon : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity)) // lancio il raggio invisibile e controllo se ha colpito qualcosa
         {
+            Instantiate(hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+
             Debug.Log(hit.collider.gameObject.name); // mostro a console il nome dell' oggettro colpito
 
             HealtManager healtManage = hit.collider.GetComponent<HealtManager>(); // ottengo l'HealtManager dell'oggetto colpito
