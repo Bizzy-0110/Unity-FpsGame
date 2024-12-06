@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
-public class ExtendedStarterAssetsInputs : StarterAssetsInputs
+public class ExtendedStarterAssetsInputs : StarterAssetsInputs // estensione della classe StarterAssetsInputs
 {
 
-    // shooting
+    #region Shooting
+    // adding shooting key
     public bool shoot;
 
     #if ENABLE_INPUT_SYSTEM
@@ -22,4 +23,7 @@ public class ExtendedStarterAssetsInputs : StarterAssetsInputs
     {
         shoot = newShootState;
     }
+    #endregion
+
+
 }
