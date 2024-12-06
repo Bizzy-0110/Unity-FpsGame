@@ -5,6 +5,7 @@ public class Weapon : MonoBehaviour
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs;
 
     [SerializeField] int WeaponDamage = 1; // danno dell'arma per colpo
+    [SerializeField] ParticleSystem shotEffect;
 
     private void Awake() // funzione che viene eseguata ancora prima della start()
     {
@@ -20,7 +21,10 @@ public class Weapon : MonoBehaviour
 
     private void HandleInput() // gestisco il click del pulsante per sparare
     {
-        if (!extendedStarterAssetsInputs.shoot) return;
+        if (!extendedStarterAssetsInputs.shoot) return; // controllo se sparo
+
+        // eseguo l'effetto di sparo
+        shotEffect.Play();
 
         RaycastHit hit; // raggio invisibile
 
@@ -32,7 +36,9 @@ public class Weapon : MonoBehaviour
 
             healtManage?.TakeDamage(WeaponDamage); // se l'oggetto ha lo script healt manager gli infliggo il danno
 
-            extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
         }
+
+        extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
+
     }
 }
