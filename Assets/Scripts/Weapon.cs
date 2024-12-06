@@ -5,7 +5,10 @@ public class Weapon : MonoBehaviour
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs;
 
     [SerializeField] int WeaponDamage = 1; // danno dell'arma per colpo
-    [SerializeField] ParticleSystem shotEffect;
+    [SerializeField] ParticleSystem shotEffect; // effetto di sparo
+    [SerializeField] Animator animator; // controller per l'animazione
+
+    const string SHOOT_STRING = "Shoot"; // nome dell' animazione di sparo
 
     private void Awake() // funzione che viene eseguata ancora prima della start()
     {
@@ -25,6 +28,9 @@ public class Weapon : MonoBehaviour
 
         // eseguo l'effetto di sparo
         shotEffect.Play();
+
+        // avvio l'animazione di sparo
+        animator.Play(SHOOT_STRING, 0, 0);
 
         RaycastHit hit; // raggio invisibile
 
