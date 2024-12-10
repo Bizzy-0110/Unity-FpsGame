@@ -4,12 +4,11 @@ public class Weapon : MonoBehaviour
 {
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs;
 
-    [SerializeField] int WeaponDamage = 1; // danno dell'arma per colpo
+    [SerializeField] WeaponSO weaponConf; // Weapon Scriptable Object contenente le impostazioni dell'arma
 
     [SerializeField] ParticleSystem shotEffect; // effetto di sparo
     [SerializeField] Animator animator; // controller per l'animazione
 
-    [SerializeField] GameObject hitVFXPrefab;
 
     const string SHOOT_STRING = "Shoot"; // nome dell' animazione di sparo
 
@@ -39,13 +38,13 @@ public class Weapon : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity)) // lancio il raggio invisibile e controllo se ha colpito qualcosa
         {
-            Instantiate(hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+            Instantiate(weaponConf.hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
 
             Debug.Log(hit.collider.gameObject.name); // mostro a console il nome dell' oggettro colpito
 
             HealtManager healtManage = hit.collider.GetComponent<HealtManager>(); // ottengo l'HealtManager dell'oggetto colpito
 
-            healtManage?.TakeDamage(WeaponDamage); // se l'oggetto ha lo script healt manager gli infliggo il danno
+            healtManage?.TakeDamage(weaponConf.Damage); // se l'oggetto ha lo script healt manager gli infliggo il danno
 
         }
 
