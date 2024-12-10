@@ -4,8 +4,6 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] ParticleSystem shotEffect; // effetto di sparo
 
-
-
     public void Shoot(WeaponSO weaponConf)
     {
         // eseguo l'effetto di sparo

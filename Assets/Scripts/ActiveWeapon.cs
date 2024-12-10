@@ -4,6 +4,8 @@ public class ActiveWeapon : MonoBehaviour
 {
     Weapon currentWeapon;
 
+    private float timeSinceLastShot = 0f;
+
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs; // estensione della classe StarterAssetsInputs
 
     [SerializeField] WeaponSO weaponConf; // Weapon Scriptable Object contenente le impostazioni dell'arma
@@ -27,11 +29,18 @@ public class ActiveWeapon : MonoBehaviour
     void Update()
     {
         HandleInput();
+
+        timeSinceLastShot += Time.deltaTime;
     }
 
     private void HandleInput() // gestisco il click del pulsante per sparare
     {
         if (!extendedStarterAssetsInputs.shoot) return; // controllo se sparo
+
+        if(timeSinceLastShot < weaponConf.FireRate) return; // controllo se è passato il tempo di shot
+
+        timeSinceLastShot = 0f; // resetto il contatore
+
         // avvio l'animazione di sparo
         animator.Play(SHOOT_STRING, 0, 0);
 
