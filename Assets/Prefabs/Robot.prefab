@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7226134215955438609}
   - component: {fileID: 7882599739850870579}
   - component: {fileID: 4547704152888857203}
+  - component: {fileID: 5384171044209999074}
   m_Layer: 6
   m_Name: Robot
   m_TagString: Untagged
@@ -54,8 +55,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
+  m_Height: 1.5
+  m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &7226134215955438609
@@ -109,6 +110,28 @@ MonoBehaviour:
   maxHP: 5
   regenHP: 0
   regenDelay: 0
+--- !u!95 &5384171044209999074
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760387249112600516}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c57801fd40df2df4b9995d0498f4dd9b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6438678341086119833
 GameObject:
   m_ObjectHideFlags: 0
