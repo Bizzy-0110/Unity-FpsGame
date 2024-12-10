@@ -2,37 +2,14 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    ExtendedStarterAssetsInputs extendedStarterAssetsInputs;
-
-    [SerializeField] WeaponSO weaponConf; // Weapon Scriptable Object contenente le impostazioni dell'arma
-
     [SerializeField] ParticleSystem shotEffect; // effetto di sparo
-    [SerializeField] Animator animator; // controller per l'animazione
 
 
-    const string SHOOT_STRING = "Shoot"; // nome dell' animazione di sparo
 
-    private void Awake() // funzione che viene eseguata ancora prima della start()
+    public void Shoot(WeaponSO weaponConf)
     {
-        extendedStarterAssetsInputs = GetComponentInParent<ExtendedStarterAssetsInputs>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        HandleInput();
-    }
-
-
-    private void HandleInput() // gestisco il click del pulsante per sparare
-    {
-        if (!extendedStarterAssetsInputs.shoot) return; // controllo se sparo
-
         // eseguo l'effetto di sparo
         shotEffect.Play();
-
-        // avvio l'animazione di sparo
-        animator.Play(SHOOT_STRING, 0, 0);
 
         RaycastHit hit; // raggio invisibile
 
@@ -47,8 +24,5 @@ public class Weapon : MonoBehaviour
             healtManage?.TakeDamage(weaponConf.Damage); // se l'oggetto ha lo script healt manager gli infliggo il danno
 
         }
-
-        extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
-
     }
 }
