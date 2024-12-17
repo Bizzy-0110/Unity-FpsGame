@@ -45,8 +45,9 @@ public class ActiveWeapon : MonoBehaviour
         animator.Play(SHOOT_STRING, 0, 0);
 
         currentWeapon.Shoot(weaponConf); // chiamo il metodo Shoot() dell' arma corrente
-
-        extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
+  
+        if (!weaponConf.isAutomatic)
+            extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
 
     }
 }
