@@ -1,27 +1,55 @@
 using UnityEngine;
 
-public class HealtManager : MonoBehaviour
+public class HealthManager : MonoBehaviour
 {
-    [SerializeField] int startHP = 100; // initial healt of the entity
-    [SerializeField] int maxHP = 100; // max healt for the entity
-    [SerializeField] int regenHP = 0; // regen amount
-    [SerializeField] int regenDelay = 0;
+    [SerializeField] int startHP = 100; // Salute iniziale
+    [SerializeField] int maxHP = 100; // Salute massima
+    [SerializeField] int regenHP = 1; // Quantità di salute rigenerata ogni volta
+    [SerializeField] float regenDelay = 1f; // Tempo di ritardo per la rigenerazione (in secondi)
 
-    private int healt;
+    private int health;
+    private float timeSinceLastRegen = 0f; // Tempo trascorso dall'ultima rigenerazione
 
     private void Start()
     {
-        healt = startHP;
+        health = startHP;
+    }
+
+    private void Update()
+    {
+        // Aumenta il tempo trascorso dal momento dell'ultimo aggiornamento
+        timeSinceLastRegen += Time.deltaTime;
+
+        // Se il tempo trascorso è maggiore o uguale al ritardo di rigenerazione, rigenera la salute
+        if (timeSinceLastRegen >= regenDelay)
+        {
+            Regenerate();
+            timeSinceLastRegen = 0f; // Reset del timer
+        }
+    }
+
+    private void Regenerate()
+    {
+        health += regenHP; // Aggiungi la salute rigenerata
+
+        // Assicurati che la salute non superi il massimo
+        if (health > maxHP)
+            health = maxHP;
     }
 
     public void TakeDamage(int damage)
     {
-        healt -= damage;
+        health -= damage; // Sottrai i danni
 
-        if (healt <= 0) // nascondo il robot se finisce la vita
+        if (health <= 0) // Se la salute arriva a zero o meno, disabilita l'oggetto
         {
-            gameObject.SetActive(false);
+            health = 0; // Imposta la salute a zero (evita valori negativi)
+            gameObject.SetActive(false); // Disabilita l'oggetto (oppure aggiungi una logica per morte/animazione)
         }
+    }
 
+    public int GetHealth()
+    {
+        return health;
     }
 }

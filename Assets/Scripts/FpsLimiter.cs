@@ -10,7 +10,7 @@ public static class FpsLimiter
 {
     static FpsLimiter()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 120;
     }
 }
 #endif

@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
 
             // Debug.Log(hit.collider.gameObject.name); // mostro a console il nome dell' oggettro colpito
 
-            HealtManager healtManage = hit.collider.GetComponent<HealtManager>(); // ottengo l'HealtManager dell'oggetto colpito
+            HealthManager healtManage = hit.collider.GetComponent<HealthManager>(); // ottengo l'HealtManager dell'oggetto colpito
 
             healtManage?.TakeDamage(weaponConf.Damage); // se l'oggetto ha lo script healt manager gli infliggo il danno
 
