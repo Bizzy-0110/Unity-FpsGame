@@ -50,4 +50,19 @@ public class ActiveWeapon : MonoBehaviour
             extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
 
     }
+
+    public void SwitchWeapon(WeaponSO weaponSO)
+    {
+        Debug.Log("Cambio arma " +  weaponSO.name);
+
+        if (currentWeapon != null)
+        {
+            Destroy(currentWeapon.gameObject);
+        }
+
+        Weapon weapon = Instantiate(weaponSO.weaponPrefab, transform).GetComponent<Weapon>();
+
+        currentWeapon = weapon;
+        this.weaponConf = weaponSO;
+    }
 }

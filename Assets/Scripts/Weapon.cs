@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviour
         {
             Instantiate(weaponConf.hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
 
-            Debug.Log(hit.collider.gameObject.name); // mostro a console il nome dell' oggettro colpito
+            // Debug.Log(hit.collider.gameObject.name); // mostro a console il nome dell' oggettro colpito
 
             HealtManager healtManage = hit.collider.GetComponent<HealtManager>(); // ottengo l'HealtManager dell'oggetto colpito
 
