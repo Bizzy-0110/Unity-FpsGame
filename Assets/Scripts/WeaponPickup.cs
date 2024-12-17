@@ -3,6 +3,7 @@ using UnityEngine;
 public class WeaponPickup : MonoBehaviour
 {
     [SerializeField] WeaponSO weaponSO; // arma del pickup
+    [SerializeField] float rotationSpeed = 100f;
 
     const string PLAY_TAG = "Player";
 
@@ -16,5 +17,10 @@ public class WeaponPickup : MonoBehaviour
 
             Destroy(gameObject); // distruggo il pickup
         }
+    }
+
+    private void Update()
+    {
+        transform.Rotate(Vector3.up*Time.deltaTime*rotationSpeed); // ruoto il modello
     }
 }
