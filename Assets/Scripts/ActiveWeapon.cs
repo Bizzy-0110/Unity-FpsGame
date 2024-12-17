@@ -4,7 +4,7 @@ public class ActiveWeapon : MonoBehaviour
 {
     Weapon currentWeapon;
 
-    private float timeSinceLastShot = 0f;
+    private float timeSinceLastShot = float.MaxValue;
 
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs; // estensione della classe StarterAssetsInputs
 
