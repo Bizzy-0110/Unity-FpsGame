@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.Rendering;
+using StarterAssets;
 
 public class ActiveWeapon : MonoBehaviour
 {
@@ -8,12 +9,14 @@ public class ActiveWeapon : MonoBehaviour
 
     private float timeSinceLastShot = float.MaxValue;
     private float defaultFOV;
+    private float defaultRotationSpeed; // velocità default di rotazione della visuale
 
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs; // estensione della classe StarterAssetsInputs
 
     [SerializeField] CinemachineVirtualCamera playerFollowCamera;
     [SerializeField] GameObject zoomVignette;
     [SerializeField] WeaponSO weaponConf; // Weapon Scriptable Object contenente le impostazioni dell'arma
+    FirstPersonController firstPersonController;
 
     Animator animator; // controller per l'animazione
 
@@ -25,6 +28,9 @@ public class ActiveWeapon : MonoBehaviour
         animator = GetComponent<Animator>();
 
         defaultFOV = playerFollowCamera.m_Lens.FieldOfView; // ottengo la fov predefinito
+        firstPersonController = GetComponentInParent<FirstPersonController>(); // ottengo il first pearson controller
+
+        defaultRotationSpeed = firstPersonController.RotationSpeed; // assegno la defaultRotationSpeed
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -48,9 +54,10 @@ public class ActiveWeapon : MonoBehaviour
         if (extendedStarterAssetsInputs.zoom)
         {
             Debug.Log("zoom in");
-            zoomVignette.SetActive(true);
-            playerFollowCamera.m_Lens.FieldOfView = weaponConf.ZoomFOV;
-            
+            zoomVignette.SetActive(true); // rendo visibile la vignetta
+            playerFollowCamera.m_Lens.FieldOfView = weaponConf.ZoomFOV; // modifico il fov
+
+            firstPersonController.RotationSpeed = weaponConf.ZoomRotationSpeed; // imposto la rotationSpeed prendendola dalla condfigurazione dell'arma
         }
         else
         {
@@ -58,6 +65,8 @@ public class ActiveWeapon : MonoBehaviour
             Debug.Log("zoom out");
             zoomVignette.SetActive(false);
             playerFollowCamera.m_Lens.FieldOfView = defaultFOV;
+
+            firstPersonController.RotationSpeed = defaultRotationSpeed; // resetto la rotation speed
         }
     }
 

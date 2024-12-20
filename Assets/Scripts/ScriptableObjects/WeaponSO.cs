@@ -8,6 +8,7 @@ public class WeaponSO : ScriptableObject
 
     public bool canZoom=false; // flag che indica se l'arma può mirare
     public float ZoomFOV; // fov dell'eventuale zoom
+    public float ZoomRotationSpeed = 0.3f; // sensibilità visuale mestre si usa lo zoom
 
     public bool isAutomatic=false; // indica se l'arma è automatica
     public int Damage = 1; // danno per colpo
