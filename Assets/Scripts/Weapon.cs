@@ -3,6 +3,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] ParticleSystem shotEffect; // effetto di sparo
+    [SerializeField] LayerMask interactionLayer; // cosa completamente inutile ma necessaria
 
     public void Shoot(WeaponSO weaponConf)
     {
@@ -11,7 +12,7 @@ public class Weapon : MonoBehaviour
 
         RaycastHit hit; // raggio invisibile
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity)) // lancio il raggio invisibile e controllo se ha colpito qualcosa
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity, interactionLayer, QueryTriggerInteraction.Ignore)) // lancio il raggio invisibile e controllo se ha colpito qualcosa
         {
             Instantiate(weaponConf.hitVFXPrefab, hit.point, Quaternion.LookRotation(hit.normal));
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.Rendering;
 using StarterAssets;
+using TMPro;
 
 public class ActiveWeapon : MonoBehaviour
 {
@@ -13,14 +14,25 @@ public class ActiveWeapon : MonoBehaviour
 
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs; // estensione della classe StarterAssetsInputs
 
+    [SerializeField] TMP_Text ammoText; // etichetta che contiene il numero di munizioni
     [SerializeField] CinemachineVirtualCamera playerFollowCamera;
     [SerializeField] GameObject zoomVignette;
-    [SerializeField] WeaponSO weaponConf; // Weapon Scriptable Object contenente le impostazioni dell'arma
+    [SerializeField] WeaponSO startingWeaponSO; // Weapon Scriptable Object contenente le impostazioni dell'arma iniziale
+
+    WeaponSO CurrentWeaponSO;
     FirstPersonController firstPersonController;
+
+    private int currentAmmo;
 
     Animator animator; // controller per l'animazione
 
     const string SHOOT_STRING = "Shoot"; // nome dell' animazione di sparo
+
+    public void AdjustAmmo(int amount)
+    {
+        currentAmmo += amount;
+        ammoText.text = currentAmmo.ToString("D2");
+    }
 
     private void Awake() // funzione che viene eseguata ancora prima della start()
     {
@@ -36,7 +48,11 @@ public class ActiveWeapon : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentWeapon = GetComponentInChildren<Weapon>();
+        //currentWeapon = GetComponentInChildren<Weapon>();
+
+        SwitchWeapon(startingWeaponSO);
+        AdjustAmmo(CurrentWeaponSO.MagazineSize);
+
     }
 
     void Update()
@@ -49,15 +65,15 @@ public class ActiveWeapon : MonoBehaviour
 
     private void HandleZoom()
     {
-        if (!weaponConf.canZoom) return; // controllo che l'arma possa sparare
+        if (!startingWeaponSO.canZoom) return; // controllo che l'arma possa sparare
 
         if (extendedStarterAssetsInputs.zoom)
         {
             Debug.Log("zoom in");
             zoomVignette.SetActive(true); // rendo visibile la vignetta
-            playerFollowCamera.m_Lens.FieldOfView = weaponConf.ZoomFOV; // modifico il fov
+            playerFollowCamera.m_Lens.FieldOfView = startingWeaponSO.ZoomFOV; // modifico il fov
 
-            firstPersonController.RotationSpeed = weaponConf.ZoomRotationSpeed; // imposto la rotationSpeed prendendola dalla condfigurazione dell'arma
+            firstPersonController.RotationSpeed = startingWeaponSO.ZoomRotationSpeed; // imposto la rotationSpeed prendendola dalla condfigurazione dell'arma
         }
         else
         {
@@ -74,16 +90,16 @@ public class ActiveWeapon : MonoBehaviour
     {
         if (!extendedStarterAssetsInputs.shoot) return; // controllo se sparo
 
-        if(timeSinceLastShot < weaponConf.FireRate) return; // controllo se è passato il tempo di shot
+        if(timeSinceLastShot < startingWeaponSO.FireRate) return; // controllo se è passato il tempo di shot
 
         timeSinceLastShot = 0f; // resetto il contatore
 
         // avvio l'animazione di sparo
         animator.Play(SHOOT_STRING, 0, 0);
 
-        currentWeapon.Shoot(weaponConf); // chiamo il metodo Shoot() dell' arma corrente
+        currentWeapon.Shoot(startingWeaponSO); // chiamo il metodo Shoot() dell' arma corrente
   
-        if (!weaponConf.isAutomatic)
+        if (!startingWeaponSO.isAutomatic)
             extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
 
     }
@@ -100,6 +116,6 @@ public class ActiveWeapon : MonoBehaviour
         Weapon weapon = Instantiate(weaponSO.weaponPrefab, transform).GetComponent<Weapon>();
 
         currentWeapon = weapon;
-        this.weaponConf = weaponSO;
+        this.CurrentWeaponSO = weaponSO;
     }
 }

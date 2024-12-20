@@ -79,6 +79,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotEffect: {fileID: 1269565919019983547}
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &8975802540713791068
 GameObject:
   m_ObjectHideFlags: 0
