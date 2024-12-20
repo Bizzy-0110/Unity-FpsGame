@@ -1,13 +1,18 @@
 using UnityEngine;
+using Cinemachine;
+using UnityEngine.Rendering;
 
 public class ActiveWeapon : MonoBehaviour
 {
     Weapon currentWeapon;
 
     private float timeSinceLastShot = float.MaxValue;
+    private float defaultFOV;
 
     ExtendedStarterAssetsInputs extendedStarterAssetsInputs; // estensione della classe StarterAssetsInputs
 
+    [SerializeField] CinemachineVirtualCamera playerFollowCamera;
+    [SerializeField] GameObject zoomVignette;
     [SerializeField] WeaponSO weaponConf; // Weapon Scriptable Object contenente le impostazioni dell'arma
 
     Animator animator; // controller per l'animazione
@@ -18,6 +23,8 @@ public class ActiveWeapon : MonoBehaviour
     {
         extendedStarterAssetsInputs = GetComponentInParent<ExtendedStarterAssetsInputs>();
         animator = GetComponent<Animator>();
+
+        defaultFOV = playerFollowCamera.m_Lens.FieldOfView; // ottengo la fov predefinito
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,8 +36,29 @@ public class ActiveWeapon : MonoBehaviour
     void Update()
     {
         HandleInput();
+        HandleZoom();
 
         timeSinceLastShot += Time.deltaTime;
+    }
+
+    private void HandleZoom()
+    {
+        if (!weaponConf.canZoom) return; // controllo che l'arma possa sparare
+
+        if (extendedStarterAssetsInputs.zoom)
+        {
+            Debug.Log("zoom in");
+            zoomVignette.SetActive(true);
+            playerFollowCamera.m_Lens.FieldOfView = weaponConf.ZoomFOV;
+            
+        }
+        else
+        {
+
+            Debug.Log("zoom out");
+            zoomVignette.SetActive(false);
+            playerFollowCamera.m_Lens.FieldOfView = defaultFOV;
+        }
     }
 
     private void HandleInput() // gestisco il click del pulsante per sparare

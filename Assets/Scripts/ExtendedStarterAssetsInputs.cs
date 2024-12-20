@@ -25,5 +25,24 @@ public class ExtendedStarterAssetsInputs : StarterAssetsInputs // estensione del
     }
     #endregion
 
+    #region Zoom
+
+    // adding shooting key
+    public bool zoom;
+
+    #if ENABLE_INPUT_SYSTEM
+    public void OnZoom(InputValue inputValue)
+    {
+        ZoomInput(inputValue.isPressed);
+    }
+#endif
+
+    public void ZoomInput(bool newZoomState)
+    {
+        zoom = newZoomState;
+    }
+
+    #endregion
+
 
 }

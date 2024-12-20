@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 7055813437559300686, guid: c481da350c49bf34fb5ecfc4ef45d6c4, type: 3}
+  canZoom: 0
   isAutomatic: 0
   Damage: 1
   FireRate: 0.5
