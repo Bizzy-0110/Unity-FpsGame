@@ -3,32 +3,42 @@ using Cinemachine;
 using UnityEngine.Rendering;
 using StarterAssets;
 using TMPro;
+using UnityEngine.Android;
 
 public class ActiveWeapon : MonoBehaviour
 {
-    Weapon currentWeapon;
+    #region Attributes
 
-    private float timeSinceLastShot = float.MaxValue;
-    private float defaultFOV;
-    private float defaultRotationSpeed; // velocità default di rotazione della visuale
-
-    ExtendedStarterAssetsInputs extendedStarterAssetsInputs; // estensione della classe StarterAssetsInputs
-
-    [SerializeField] TMP_Text ammoText; // etichetta che contiene il numero di munizioni
-    [SerializeField] CinemachineVirtualCamera playerFollowCamera;
-    [SerializeField] GameObject zoomVignette;
-    [SerializeField] WeaponSO startingWeaponSO; // Weapon Scriptable Object contenente le impostazioni dell'arma iniziale
-
-    WeaponSO CurrentWeaponSO;
-    FirstPersonController firstPersonController;
-
-    private int currentAmmo;
-
-    Animator animator; // controller per l'animazione
-
+    // costanti
     const string SHOOT_STRING = "Shoot"; // nome dell' animazione di sparo
 
-    public void AdjustAmmo(int amount)
+    #region Serialized Fields
+
+
+    [SerializeField] TMP_Text ammoText; // etichetta che contiene il numero di munizioni
+    [SerializeField] GameObject zoomVignette; // vignetta che appare quando si usa lo zoom (arma con ottica)
+
+    [SerializeField] CinemachineVirtualCamera playerFollowCamera; // riferimento alla camera 
+    [SerializeField] WeaponSO startingWeaponSO; // Weapon Scriptable Object contenente le impostazioni dell'arma iniziale
+
+    #endregion
+
+    WeaponSO CurrentWeaponSO; // Scriptable Object contenente le impostazioni dell'arma corrente
+    Weapon currentWeapon; // riferimento all'arma corrente
+    
+
+    private float timeSinceLastShot = float.MaxValue; // tempo trascorso dall'ultimo sparo
+    private float defaultFOV; // fov predefinito della camera
+    private float defaultRotationSpeed; // velocità default di rotazione della visuale
+    private int currentAmmo = 0; // quantità munizioni correnti
+
+    ExtendedStarterAssetsInputs extendedStarterAssetsInputs; // estensione della classe StarterAssetsInputs
+    FirstPersonController firstPersonController; // riferimento al FirstPersonController
+    Animator animator; // controller per l'animazione
+
+    #endregion
+
+    public void AdjustAmmo(int amount) // metodo per aggiungere munizioni
     {
         currentAmmo += amount;
         ammoText.text = currentAmmo.ToString("D2");
@@ -45,13 +55,12 @@ public class ActiveWeapon : MonoBehaviour
         defaultRotationSpeed = firstPersonController.RotationSpeed; // assegno la defaultRotationSpeed
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //currentWeapon = GetComponentInChildren<Weapon>();
 
-        SwitchWeapon(startingWeaponSO);
-        AdjustAmmo(CurrentWeaponSO.MagazineSize);
+        SwitchWeapon(startingWeaponSO); // imposto l'arma iniziale
+        AdjustAmmo(CurrentWeaponSO.MagazineSize); // imposto il numero di munizioni iniziale
 
     }
 
@@ -60,14 +69,14 @@ public class ActiveWeapon : MonoBehaviour
         HandleInput();
         HandleZoom();
 
-        timeSinceLastShot += Time.deltaTime;
+        timeSinceLastShot += Time.deltaTime; // incremento il tempo trascorso dall'ultimo sparo
     }
 
     private void HandleZoom()
     {
-        if (!startingWeaponSO.canZoom) return; // controllo che l'arma possa sparare
+        if (!CurrentWeaponSO.canZoom) return; // controllo che l'arma possa zoomare
 
-        if (extendedStarterAssetsInputs.zoom)
+        if (extendedStarterAssetsInputs.zoom) // controllo devo zoomare
         {
             Debug.Log("zoom in");
             zoomVignette.SetActive(true); // rendo visibile la vignetta
@@ -90,16 +99,16 @@ public class ActiveWeapon : MonoBehaviour
     {
         if (!extendedStarterAssetsInputs.shoot) return; // controllo se sparo
 
-        if(timeSinceLastShot < startingWeaponSO.FireRate) return; // controllo se è passato il tempo di shot
+        if(timeSinceLastShot < CurrentWeaponSO.FireRate) return; // controllo se è passato il tempo di shot
 
         timeSinceLastShot = 0f; // resetto il contatore
 
         // avvio l'animazione di sparo
         animator.Play(SHOOT_STRING, 0, 0);
 
-        currentWeapon.Shoot(startingWeaponSO); // chiamo il metodo Shoot() dell' arma corrente
+        currentWeapon.Shoot(CurrentWeaponSO); // chiamo il metodo Shoot() dell' arma corrente
   
-        if (!startingWeaponSO.isAutomatic)
+        if (!CurrentWeaponSO.isAutomatic)
             extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
 
     }
