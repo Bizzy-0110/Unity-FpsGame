@@ -78,16 +78,18 @@ public class ActiveWeapon : MonoBehaviour
 
         if (extendedStarterAssetsInputs.zoom) // controllo devo zoomare
         {
-            Debug.Log("zoom in");
-            zoomVignette.SetActive(true); // rendo visibile la vignetta
-            playerFollowCamera.m_Lens.FieldOfView = startingWeaponSO.ZoomFOV; // modifico il fov
+            //Debug.Log("zoom in");
 
-            firstPersonController.RotationSpeed = startingWeaponSO.ZoomRotationSpeed; // imposto la rotationSpeed prendendola dalla condfigurazione dell'arma
+            zoomVignette.SetActive(true); // rendo visibile la vignetta
+            playerFollowCamera.m_Lens.FieldOfView = CurrentWeaponSO.ZoomFOV; // modifico il fov
+
+            firstPersonController.RotationSpeed = CurrentWeaponSO.ZoomRotationSpeed; // imposto la rotationSpeed prendendola dalla condfigurazione dell'arma
         }
         else
         {
 
-            Debug.Log("zoom out");
+            // Debug.Log("zoom out");
+
             zoomVignette.SetActive(false);
             playerFollowCamera.m_Lens.FieldOfView = defaultFOV;
 
