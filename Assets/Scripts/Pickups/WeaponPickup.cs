@@ -3,11 +3,10 @@ using UnityEngine;
 public class WeaponPickup : Pickup
 {
     [SerializeField] WeaponSO weaponSO; // arma del pickup
-    [SerializeField] float rotationSpeed = 100f;
 
     private void Update()
     {
-        transform.Rotate(Vector3.up*Time.deltaTime*rotationSpeed); // ruoto il modello
+        rotateModel(); // rotazione del modello del pickup
     }
 
     protected override void OnPickup(ActiveWeapon aw)

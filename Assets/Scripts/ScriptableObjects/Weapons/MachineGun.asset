@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: MachineGun
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 7055813437559300686, guid: 5254a7e6eff25d6439915767b5cc31f7, type: 3}
+  MagazineSize: 100
   canZoom: 0
+  ZoomFOV: 0
+  ZoomRotationSpeed: 0.3
   isAutomatic: 1
   Damage: 1
   FireRate: 0.06
