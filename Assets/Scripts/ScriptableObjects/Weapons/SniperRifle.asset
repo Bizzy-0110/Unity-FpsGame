@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SniperRifle
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 7055813437559300686, guid: 8b4a662d89b966347a23c3c2ed49fe55, type: 3}
-  MagazineSize: 10
+  MagazineSize: 20
   canZoom: 1
   ZoomFOV: 15
   ZoomRotationSpeed: 0.3

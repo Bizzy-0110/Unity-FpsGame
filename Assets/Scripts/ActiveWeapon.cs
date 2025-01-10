@@ -41,7 +41,13 @@ public class ActiveWeapon : MonoBehaviour
     public void AdjustAmmo(int amount) // metodo per aggiungere munizioni
     {
         currentAmmo += amount;
+        
+        if (currentAmmo > CurrentWeaponSO.MagazineSize)
+            currentAmmo = CurrentWeaponSO.MagazineSize;
+
         ammoText.text = currentAmmo.ToString("D2");
+
+
     }
 
     private void Awake() // funzione che viene eseguata ancora prima della start()
@@ -130,5 +136,7 @@ public class ActiveWeapon : MonoBehaviour
 
         currentWeapon = weapon;
         this.CurrentWeaponSO = weaponSO;
+
+        AdjustAmmo(weaponSO.MagazineSize);
     }
 }
