@@ -110,6 +110,7 @@ MonoBehaviour:
   maxHP: 5
   regenHP: 0
   regenDelay: 0
+  destroyEffect: {fileID: 6974124977891962246, guid: aa3f8ad00d0e08a4d987d99756a7f5e5, type: 3}
 --- !u!95 &5384171044209999074
 Animator:
   serializedVersion: 7

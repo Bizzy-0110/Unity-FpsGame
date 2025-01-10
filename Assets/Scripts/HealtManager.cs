@@ -6,6 +6,7 @@ public class HealthManager : MonoBehaviour
     [SerializeField] int maxHP = 100; // Salute massima
     [SerializeField] int regenHP = 1; // Quantità di salute rigenerata ogni volta
     [SerializeField] float regenDelay = 1f; // Tempo di ritardo per la rigenerazione (in secondi)
+    [SerializeField] GameObject destroyEffect;
 
     private int health;
     private float timeSinceLastRegen = 0f; // Tempo trascorso dall'ultima rigenerazione
@@ -43,6 +44,11 @@ public class HealthManager : MonoBehaviour
 
         if (health <= 0) // Se la salute arriva a zero o meno, disabilita l'oggetto
         {
+            if (destroyEffect != null)
+            {
+                Instantiate(destroyEffect, transform.position, Quaternion.identity);
+            }
+
             health = 0; // Imposta la salute a zero (evita valori negativi)
             gameObject.SetActive(false); // Disabilita l'oggetto (oppure aggiungi una logica per morte/animazione)
         }
