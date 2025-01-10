@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -5,10 +6,21 @@ public class Weapon : MonoBehaviour
     [SerializeField] ParticleSystem shotEffect; // effetto di sparo
     [SerializeField] LayerMask interactionLayer; // cosa completamente inutile ma necessaria
 
+    CinemachineImpulseSource impulseSource;
+
+
+    private void Awake()
+    {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+    }
+
     public void Shoot(WeaponSO weaponConf)
     {
         // eseguo l'effetto di sparo
         shotEffect.Play();
+
+        // genero l'impulso per eseguire l'effetto sulla videocamera
+        impulseSource.GenerateImpulse();
 
         RaycastHit hit; // raggio invisibile
 
