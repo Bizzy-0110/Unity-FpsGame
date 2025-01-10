@@ -66,7 +66,7 @@ public class ActiveWeapon : MonoBehaviour
 
     void Update()
     {
-        HandleInput();
+        HandleShoot();
         HandleZoom();
 
         timeSinceLastShot += Time.deltaTime; // incremento il tempo trascorso dall'ultimo sparo
@@ -97,11 +97,11 @@ public class ActiveWeapon : MonoBehaviour
         }
     }
 
-    private void HandleInput() // gestisco il click del pulsante per sparare
+    private void HandleShoot() // gestisco il click del pulsante per sparare
     {
         if (!extendedStarterAssetsInputs.shoot) return; // controllo se sparo
 
-        if(timeSinceLastShot < CurrentWeaponSO.FireRate) return; // controllo se è passato il tempo di shot
+        if(timeSinceLastShot < CurrentWeaponSO.FireRate || currentAmmo<=0) return; // controllo se è passato il tempo di shot e se ho proiettili
 
         timeSinceLastShot = 0f; // resetto il contatore
 
@@ -109,7 +109,9 @@ public class ActiveWeapon : MonoBehaviour
         animator.Play(SHOOT_STRING, 0, 0);
 
         currentWeapon.Shoot(CurrentWeaponSO); // chiamo il metodo Shoot() dell' arma corrente
-  
+
+        AdjustAmmo(-1); // scalo il numero di proiettili
+
         if (!CurrentWeaponSO.isAutomatic)
             extendedStarterAssetsInputs.ShootInput(false); // resetto il flag dello sparo
 
