@@ -4,6 +4,7 @@ public class Explosion : MonoBehaviour
 {
 
     [SerializeField] float radius = 1.5f;
+    [SerializeField] int damage = 3;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,7 +21,17 @@ public class Explosion : MonoBehaviour
 
     void Explode()
     {
-        //todo
+        Collider[] colliders = Physics.OverlapSphere(transform.position,radius); // controllo quali collider sono all' interno alla sfera di raggio radius
+
+        foreach (Collider collider in colliders)
+        {
+            PlayerHealt playerHealt = collider.GetComponent<PlayerHealt>();
+            if (!playerHealt) continue;
+
+            playerHealt.TakeDamage(damage);
+
+            break; // stoppo il ciclo dato che cìè solo un player
+        }
     }
 
 }
