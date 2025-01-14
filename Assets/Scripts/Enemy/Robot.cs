@@ -19,6 +19,8 @@ public class Robot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!player) return; // controllo che il player esista
+
         agent.SetDestination(player.transform.position); // imposto la nuova posizione in cui il robot deve andare
     }
 

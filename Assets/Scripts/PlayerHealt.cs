@@ -4,8 +4,10 @@ public class PlayerHealt : MonoBehaviour
 {
 
     [SerializeField] int startingHealt = 5;
+    [SerializeField] Cinemachine.CinemachineVirtualCamera deathVcam;
+    [SerializeField] Transform weaponCamera;
 
-    [SerializeField] int currrentHealt;
+    int currrentHealt;
 
     private void Awake()
     {
@@ -19,6 +21,9 @@ public class PlayerHealt : MonoBehaviour
 
         if (currrentHealt <= 0)
         {
+            weaponCamera.parent = null; // rimuovo la telecamera
+            deathVcam.Priority = 20;
+            
             Destroy(gameObject); // temporaneo
         }
     }
