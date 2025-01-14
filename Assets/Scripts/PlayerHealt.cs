@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class PlayerHealt : MonoBehaviour
 {
@@ -7,7 +9,17 @@ public class PlayerHealt : MonoBehaviour
     [SerializeField] Cinemachine.CinemachineVirtualCamera deathVcam;
     [SerializeField] Transform weaponCamera;
 
+    [SerializeField] Image[] shieldBar;
+
     int currrentHealt;
+
+    private void UpdateShieldBar()
+    {
+        for (int i = 0; i < shieldBar.Length; i++)
+        {
+            shieldBar[i].enabled = i<currrentHealt;
+        }
+    }
 
     private void Awake()
     {
@@ -18,6 +30,8 @@ public class PlayerHealt : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currrentHealt -= damage;
+
+        UpdateShieldBar(); // aggiorno la barra della vita
 
         if (currrentHealt <= 0)
         {
