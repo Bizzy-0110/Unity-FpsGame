@@ -44,14 +44,23 @@ public class HealthManager : MonoBehaviour
 
         if (health <= 0) // Se la salute arriva a zero o meno, disabilita l'oggetto
         {
-            if (destroyEffect != null)
-            {
-                Instantiate(destroyEffect, transform.position, Quaternion.identity);
-            }
-
+            SelfDestruction();
             health = 0; // Imposta la salute a zero (evita valori negativi)
-            gameObject.SetActive(false); // Disabilita l'oggetto (oppure aggiungi una logica per morte/animazione)
         }
+        
+    }
+
+    public void SelfDestruction()
+    {
+        if (destroyEffect != null)
+        {
+            Instantiate(destroyEffect, transform.position, Quaternion.identity);
+        }
+
+        Destroy(gameObject); // elimino dalla memoria il nemico
+        
+        // TODO: pool Enemies
+       // gameObject.SetActive(false); // Disabilita l'oggetto (oppure aggiungi una logica per morte/animazione)
     }
 
     public int GetHealth()
