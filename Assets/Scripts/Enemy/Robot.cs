@@ -30,7 +30,7 @@ public class Robot : MonoBehaviour
         {
             HealthManager enemyHealt=GetComponent<HealthManager>();
 
-            enemyHealt.SelfDestruction();
+            enemyHealt.onDeath();
         }
     }
 }
