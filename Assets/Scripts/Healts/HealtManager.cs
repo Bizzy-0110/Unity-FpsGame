@@ -42,6 +42,8 @@ public abstract class HealthManager : MonoBehaviour
     {
         currentHealth += regenHP; // Aggiungi la salute rigenerata
 
+        onHealtUpdate(); // Esegui l'aggiornamento della salute
+
         // Assicurati che la salute non superi il massimo
         if (currentHealth > maxHP)
             currentHealth = maxHP;
@@ -68,6 +70,13 @@ public abstract class HealthManager : MonoBehaviour
     public abstract void onDeath(); // funzione eseguita una volta essaurita la vita
     public abstract void onHealtUpdate(); // funzione eseguita quando la salute viene modificata
 
+    protected void showDestroyEffect() // Mostra l'effetto di distruzione se impostato
+    {
+        if (destroyEffect != null)
+        {
+            Instantiate(destroyEffect, transform.position, Quaternion.identity);
+        }
+    }
 
     public int GetHealth()
     {

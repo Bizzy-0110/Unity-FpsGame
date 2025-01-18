@@ -73,9 +73,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3416542991534055823}
-  - component: {fileID: 6751643343331100289}
   - component: {fileID: 4149255707579428913}
   - component: {fileID: 6650779904806519184}
+  - component: {fileID: 5897805052344187512}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -100,23 +100,6 @@ Transform:
   - {fileID: 2719159273214866148}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6751643343331100289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7813603342004483459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fa2ade841a42614bbd6c38202a1f437, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startHP: 30
-  maxHP: 30
-  regenHP: 0
-  regenDelay: 0
-  destroyEffect: {fileID: 6974124977891962246, guid: aa3f8ad00d0e08a4d987d99756a7f5e5, type: 3}
 --- !u!65 &4149255707579428913
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -153,6 +136,25 @@ MonoBehaviour:
   entityPrefab: {fileID: 760387249112600516, guid: db8e7ae13bfd56143997fec6ee1c2856, type: 3}
   spawnPoint: {fileID: 2719159273214866148}
   spawnInterval: 5
+--- !u!114 &5897805052344187512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7813603342004483459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e75fc4164c66464d83e787d866e4a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invincible: 0
+  regenerate: 0
+  regenHP: 0
+  regenDelay: 0
+  startHP: 100
+  maxHP: 100
+  destroyEffect: {fileID: 6974124977891962246, guid: aa3f8ad00d0e08a4d987d99756a7f5e5, type: 3}
 --- !u!1001 &1346038426471750752
 PrefabInstance:
   m_ObjectHideFlags: 0

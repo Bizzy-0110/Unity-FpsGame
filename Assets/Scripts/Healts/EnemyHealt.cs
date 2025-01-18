@@ -10,10 +10,7 @@ public class EnemyHealt : HealthManager
 
     public override void onDeath() // metodo che viene chiamato quando la salute arriva a zero
     {   
-        if (destroyEffect != null)
-        {
-            Instantiate(destroyEffect, transform.position, Quaternion.identity);
-        }
+        showDestroyEffect(); // mostro l'effetto di distruzione
 
         Destroy(gameObject); // elimino dalla memoria il nemico
         // TODO: pool Enemies
